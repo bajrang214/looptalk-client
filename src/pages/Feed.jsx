@@ -15,7 +15,7 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/posts");
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/posts`);
       setPosts(res.data);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -25,7 +25,7 @@ const Feed = () => {
 
   const handleLike = async (postId) => {
     try {
-      await axios.put(`http://localhost:5000/api/posts/${postId}/like`, {}, {
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchPosts();
@@ -43,7 +43,7 @@ const Feed = () => {
     if (!text || !text.trim()) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/posts/${postId}/comment`,
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,7 +56,7 @@ const Feed = () => {
 
   const handleDeleteComment = async (postId, index) => {
     try {
-      await axios.put(`http://localhost:5000/api/posts/${postId}/comment/delete`,
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}/comment/delete`,
         { index },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -74,7 +74,7 @@ const Feed = () => {
 
   const handleUpdatePost = async (postId) => {
     try {
-      await axios.put(`http://localhost:5000/api/posts/${postId}/edit`,
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}/edit`,
         { content: editedContent },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -91,7 +91,7 @@ const Feed = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchPosts();
@@ -153,7 +153,7 @@ const Feed = () => {
 
               {post.image && (
                 <img
-                  src={`http://localhost:5000${post.image}`}
+                  src={`${process.env.REACT_APP_API_BASE_URL}${post.image}`}
                   alt="Post"
                   className="mt-2 rounded"
                 />

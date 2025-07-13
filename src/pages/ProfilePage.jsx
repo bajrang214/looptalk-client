@@ -23,12 +23,12 @@ const ProfilePage = () => {
   if (!token) return; // ⛔ don't make request if no token
 
   try {
-    const res = await axios.get('http://localhost:5000/api/user/me', {
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setProfile(res.data);
     setBio(res.data.bio || '');
-    setPreview(`http://localhost:5000${res.data.profileImage}`);
+    setPreview(`${process.env.REACT_APP_API_BASE_URL}${res.data.profileImage}`);
   } catch (err) {
     console.error('Fetch profile error:', err);
   }
@@ -41,7 +41,7 @@ const ProfilePage = () => {
   if (!token) return;
 
   try {
-    const res = await axios.get('http://localhost:5000/api/user/me/posts', {
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/me/posts`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     setMyPosts(res.data);
@@ -63,7 +63,7 @@ const ProfilePage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put('http://localhost:5000/api/user/me', formData, {
+      const res = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/user/me`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -71,7 +71,7 @@ const ProfilePage = () => {
       });
       setMessage('✅ Profile updated');
       setProfile(res.data);
-      setPreview(`http://localhost:5000${res.data.profileImage}`);
+      setPreview(`${process.env.REACT_APP_API_BASE_URL}${res.data.profileImage}`);
     } catch (err) {
       console.error('Update profile error:', err);
       setMessage('❌ Failed to update profile');
@@ -82,7 +82,7 @@ const ProfilePage = () => {
   const handleUpdatePost = async (postId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/posts/${postId}/edit`, {
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}/edit`, {
         content: editedContent
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -101,7 +101,7 @@ const ProfilePage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchMyPosts();
@@ -200,7 +200,7 @@ const ProfilePage = () => {
                   <p className="mt-2">{post.content}</p>
                   {post.image && (
                     <img
-                      src={`http://localhost:5000${post.image}`}
+                      src={`${process.env.REACT_APP_API_BASE_URL}${post.image}`}
                       alt="Post"
                       className="mt-2 w-full rounded"
                     />

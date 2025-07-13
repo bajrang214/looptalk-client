@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/login', formData);
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/login`, formData);
       localStorage.setItem('userId', res.data.user.id);
       localStorage.setItem('token', res.data.token);
       navigate('/feed');

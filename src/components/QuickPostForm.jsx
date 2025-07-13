@@ -32,7 +32,7 @@ const QuickPostForm = ({ onPostCreated }) => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/posts', formData, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/posts`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
